@@ -3,7 +3,15 @@
 $font: 'Roboto', sans-serif;
 $primaryColor: rgb(55, 53, 47);
 $placeholderColor: rgba(0, 0, 0, 0.2);
+$indent: 42px;
 $rowWidth: calc(100% - 42px);
+$wrapperWidth: 60%;
+$primaryBackground: rgba(211, 209, 203, 0.24);
+
+@mixin hoverOnControl {
+  background: $primaryBackground;
+  transition: 0.1s linear;
+}
 
 main {
   display: flex;
@@ -35,7 +43,6 @@ main {
 }
 
 #document {
-  padding-top: 200px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -44,8 +51,46 @@ main {
 }
 
 #document-content {
-  width: 60%;
+  width: $wrapperWidth;
   height: 100%;
+}
+
+#document-header {
+  width: 100%;
+  height: auto;
+}
+
+#document-cover-wrapper {
+  height: 300px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#document-cover {
+  width: 100%;
+  height: 100%;
+}
+
+#document-icon-wrapper {
+  height: 50px;
+  width: $wrapperWidth;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+#document-icon {
+  position: absolute;
+  top: -60px;
+  left: $indent;
+  width: 100px;
+  height: 100px;
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+}
+
+#document-icon:hover {
+  @include hoverOnControl;
 }
 
 // Common styles
@@ -62,19 +107,23 @@ textarea {
   font-family: $font;
 }
 
-// Title fied
+// Title field
 
-.title-item {
+@mixin flexEnd {
   display: flex;
   justify-content: flex-end;
+}
+
+.title-item {
+  @include flexEnd;
 }
 
 .title-field {
   color: $primaryColor;
   width: $rowWidth;
+  margin-bottom: 15px;
   font-size: 45px;
   font-weight: 600;
-  margin-bottom: 15px;
 }
 
 .title-field::placeholder {
@@ -133,16 +182,53 @@ textarea {
   @include controller;
 }
 
-@mixin controllerOnHover {
-  background: rgba(211, 209, 203, 0.24);
-  transition: 0.1s linear;
-}
-
 .add-item:hover, .move-item:hover {
-  @include controllerOnHover;
+  @include hoverOnControl;
 }
 
 .text-item-controls:hover {
   opacity: 1;
   transition: 0.1s linear;
+}
+
+// Controls styles
+
+#controls {
+  @include flexEnd;
+}
+
+#controls-items {
+  background: white;
+  width: $rowWidth;
+  height: 30px;
+  display: flex;
+  div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    border-radius: 7px;
+    img {
+      width: 14px;
+      height: 14px;
+      opacity: 0.5;
+    }
+    p {
+      font-family: $font;
+      font-size: 14px;
+      margin-left: 5px;
+      color: rgba(55, 53, 47, 0.4);
+    }
+  }
+}
+
+#add-cover, #add-comment {
+  margin-left: 5px;
+}
+
+#controls-items div:hover {
+  @include hoverOnControl;
 }
