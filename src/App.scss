@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 $font: 'Roboto', sans-serif;
-$primaryColor: rgb(55, 53, 47);
+$primaryColor: rgba(55, 53, 47, 0.76);
 $placeholderColor: rgba(0, 0, 0, 0.2);
 $indent: 42px;
 $rowWidth: calc(100% - 42px);
@@ -195,6 +195,13 @@ textarea {
 
 #controls {
   @include flexEnd;
+  opacity: 0;
+  transition: 0.1s linear;
+}
+
+#controls:hover {
+  opacity: 1;
+  transition: 0.1s linear;
 }
 
 #controls-items {
