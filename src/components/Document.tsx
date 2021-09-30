@@ -3,6 +3,7 @@ import {Controls} from "./DocumentElements/Controls";
 import {Title} from "./DocumentElements/Title";
 import {Text} from "./DocumentElements/Text";
 import {Cover} from "./DocumentElements/Cover";
+import { Emoji } from "./DocumentElements/Emoji";
 
 export type DocumentItemType = {
     id: number,
@@ -59,11 +60,14 @@ export const Document = () => {
         else return -1
     }
 
+    const [isEmojiShown, setIsEmojiShown] = useState(false)
+
     return (
         <div id={'document'}>
             <Cover/>
             <div id={'document-content'}>
-                <Controls/>
+                {isEmojiShown && <Emoji isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown}/>}
+                <Controls isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown}/>
                 <Title/>
                 {documentItems.sort(documentItemsSorter).map(item => <Text key={item.id} item={item} dragging={dragging}/>)}
             </div>
