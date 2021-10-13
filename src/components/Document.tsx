@@ -3,7 +3,8 @@ import {Controls} from "./DocumentElements/Controls";
 import {Title} from "./DocumentElements/Title";
 import {Text} from "./DocumentElements/Text";
 import {Cover} from "./DocumentElements/Cover";
-import { Emoji } from "./DocumentElements/Emoji";
+import {Emoji} from "./DocumentElements/Emoji";
+import gradient_1 from '../assets/backgrounds/gradients/gradient_1.png'
 
 export type DocumentItemType = {
     id: number,
@@ -60,16 +61,23 @@ export const Document = () => {
         else return -1
     }
 
-    const [isEmojiShown, setIsEmojiShown] = useState(false)
+    const [isEmojiShown, setIsEmojiShown] = useState(true)
+    const [cover, setCover] = useState(gradient_1)
+    const [isCover, setIsCover] = useState(true)
 
     return (
         <div id={'document'}>
-            <Cover/>
+            <Cover cover={cover} setCover={setCover} isCover={isCover} setIsCover={setIsCover}/>
             <div id={'document-content'}>
                 {isEmojiShown && <Emoji isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown}/>}
-                <Controls isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown}/>
+                <Controls isEmojiShown={isEmojiShown}
+                          setIsEmojiShown={setIsEmojiShown}
+                          isCover={isCover}
+                          setIsCover={setIsCover}
+                          setCover={setCover}/>
                 <Title/>
-                {documentItems.sort(documentItemsSorter).map(item => <Text key={item.id} item={item} dragging={dragging}/>)}
+                {documentItems.sort(documentItemsSorter).map(item => <Text key={item.id} item={item}
+                                                                           dragging={dragging}/>)}
             </div>
         </div>
     )
