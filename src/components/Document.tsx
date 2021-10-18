@@ -1,7 +1,7 @@
 import React, {useState, DragEvent} from "react";
 import {Controls} from "./DocumentElements/Controls";
 import {Title} from "./DocumentElements/Title";
-import {Text} from "./DocumentElements/Text";
+import {DefaultElement} from "./DocumentElements/Element/Element";
 import {Cover} from "./DocumentElements/Cover";
 import {Emoji} from "./DocumentElements/Emoji";
 import gradient_1 from '../assets/backgrounds/gradients/gradient_1.png'
@@ -14,9 +14,9 @@ export type DocumentItemType = {
 
 export const Document = () => {
     const items = [
-        {id: 1, position: 1, text: "first"},
-        {id: 2, position: 2, text: "second"},
-        {id: 3, position: 3, text: "third"},
+        {id: 1, position: 1, text: ""},
+        //{id: 2, position: 2, text: "2"},
+        //{id: 3, position: 3, text: "3"},
     ]
 
     const [documentItems, setDocumentItems] = useState(items)
@@ -70,14 +70,11 @@ export const Document = () => {
             <Cover cover={cover} setCover={setCover} isCover={isCover} setIsCover={setIsCover}/>
             <div id={'document-content'}>
                 {isEmojiShown && <Emoji isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown}/>}
-                <Controls isEmojiShown={isEmojiShown}
-                          setIsEmojiShown={setIsEmojiShown}
-                          isCover={isCover}
-                          setIsCover={setIsCover}
-                          setCover={setCover}/>
+                <Controls isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown} isCover={isCover}
+                          setIsCover={setIsCover} setCover={setCover}/>
                 <Title/>
-                {documentItems.sort(documentItemsSorter).map(item => <Text key={item.id} item={item}
-                                                                           dragging={dragging}/>)}
+                {documentItems.sort(documentItemsSorter).map(item => <DefaultElement key={item.id} item={item}
+                                                                                     dragging={dragging}/>)}
             </div>
         </div>
     )

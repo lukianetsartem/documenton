@@ -1,0 +1,136 @@
+// Text field
+
+$rowWidth: calc(100% - 42px);
+$primaryWith: calc(100% - 28px);
+$primaryColor: rgba(55, 53, 47, 0.76);
+$placeholderColor: rgba(0, 0, 0, 0.2);
+$primaryBackground: rgba(211, 209, 203, 0.24);
+
+@mixin hoverOnControl {
+    background: $primaryBackground;
+}
+
+@mixin defaultSize {
+    width: $primaryWith;
+    margin: auto;
+    display: flex;
+}
+
+.element-field {
+    width: $rowWidth;
+    position: relative;
+}
+
+.element-menu {
+    width: 300px;
+    height: auto;
+    max-height: 290px;
+    position: absolute;
+    top: -275px;
+    background: white;
+    padding-bottom: 5px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.29);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.29);
+    box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.29);
+}
+
+.element-menu-section {
+    width: 100%;
+}
+
+.element-menu-option {
+    @include defaultSize;
+    align-items: center;
+    padding: 5px 14px 5px 14px;
+    cursor: pointer;
+}
+
+.element-menu-option:hover {
+    background: rgba(0, 0, 0, 0.07);
+}
+
+.element-menu-section-title {
+    @include defaultSize;
+    text-transform: uppercase;
+    padding: 10px 0 5px 0;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.element-menu-option-cover {
+    width: 45px;
+    height: 45px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.21);
+}
+
+.element-menu-option-text {
+    margin-left: 10px;
+}
+
+.element-menu-option-title {
+    color: black;
+    font-size: 13px;
+}
+
+.element-menu-option-subtitle {
+    color: rgba(0, 0, 0, 0.44);
+    font-size: 12px;
+}
+
+.text-field::placeholder {
+    color: $placeholderColor;
+}
+
+.element {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.text-field {
+    width: 100%;
+    font-size: 16px;
+    color: $primaryColor;
+}
+
+.element-controls {
+    width: 37px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5px;
+    opacity: 0;
+}
+
+@mixin controller {
+    cursor: pointer;
+    border-radius: 5px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 10px;
+        opacity: 0.4;
+    }
+}
+
+.add-item {
+    width: 19px;
+    @include controller;
+}
+
+.move-item {
+    width: 16px;
+    @include controller;
+}
+
+.add-item:hover, .move-item:hover {
+    @include hoverOnControl;
+}
+
+.element-controls:hover {
+    opacity: 1;
+}
