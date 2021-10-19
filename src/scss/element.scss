@@ -5,6 +5,7 @@ $primaryWith: calc(100% - 28px);
 $primaryColor: rgba(55, 53, 47, 0.76);
 $placeholderColor: rgba(0, 0, 0, 0.2);
 $primaryBackground: rgba(211, 209, 203, 0.24);
+$textColor: rgb(55, 53, 47);
 
 @mixin hoverOnControl {
     background: $primaryBackground;
@@ -86,21 +87,65 @@ $primaryBackground: rgba(211, 209, 203, 0.24);
 .element {
     width: 100%;
     display: flex;
-    justify-content: space-between;
     margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .text-field {
     width: 100%;
     font-size: 16px;
-    color: $primaryColor;
+    color: $textColor;
+}
+
+@mixin heading {
+    color: $textColor;
+    font-weight: 500;
+}
+
+.big-heading {
+    @include heading;
+    font-size: 30px;
+    //margin-top: 32px;
+}
+
+.medium-heading {
+    @include heading;
+    font-size: 24px;
+    //margin-top: 22px;
+}
+
+.small-heading {
+    @include heading;
+    font-size: 20px;
+    //margin-top: 16px;
+}
+
+.big-heading::-webkit-input-placeholder {
+    color: $placeholderColor;
+}
+
+.big-heading:-moz-placeholder {
+    color: $placeholderColor;
+}
+
+.big-heading::-moz-placeholder {
+    color: $placeholderColor;
+}
+.big-heading:-ms-input-placeholder {
+    color: $placeholderColor;
+}
+.big-heading::placeholder {
+    color: $placeholderColor;
 }
 
 .element-controls {
     width: 37px;
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     margin-right: 5px;
+    height: 25px;
     opacity: 0;
 }
 

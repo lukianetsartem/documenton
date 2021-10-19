@@ -4,25 +4,25 @@ import {Title} from "./DocumentElements/Title";
 import {DefaultElement} from "./DocumentElements/Element/Element";
 import {Cover} from "./DocumentElements/Cover";
 import {Emoji} from "./DocumentElements/Emoji";
-import gradient_1 from '../assets/backgrounds/gradients/gradient_1.png'
+import gradient_1 from '../assets/backgrounds/gradients/gradient_1.png';
 
-export type DocumentItemType = {
+export type DocumentElementType = {
     id: number,
     position: number,
     text: string,
+    type: string,
+    placeholder: string,
 }
 
 export const Document = () => {
-    const items = [
-        {id: 1, position: 1, text: ""},
-        //{id: 2, position: 2, text: "2"},
-        //{id: 3, position: 3, text: "3"},
+    const elements = [
+        {id: 1, position: 1, text: "", type: "TEXT", placeholder: 'Type \'/\' for commands'},
     ]
 
-    const [documentItems, setDocumentItems] = useState(items)
-    const [currentItem, setCurrentItem] = useState<DocumentItemType>()
+    const [documentElements, setDocumentElements] = useState(elements)
+    const [currentItem, setCurrentItem] = useState<DocumentElementType>()
 
-    const dragging = (type: string, e: DragEvent<HTMLDivElement>, item: DocumentItemType) => {
+    const dragging = (type: string, e: DragEvent<HTMLDivElement>, item: DocumentElementType) => {
         switch (type) {
             case "start": {
                 setCurrentItem(item)
@@ -40,7 +40,7 @@ export const Document = () => {
             }
             case "drop": {
                 e.preventDefault()
-                setDocumentItems(documentItems.map(i => {
+                setDocumentElements(documentElements.map(i => {
                     if (currentItem !== undefined) {
                         if (i.id === item.id) {
                             return {...i, position: currentItem.position}
@@ -56,14 +56,14 @@ export const Document = () => {
         }
     }
 
-    const documentItemsSorter = (a: DocumentItemType, b: DocumentItemType) => {
+    const documentItemsSorter = (a: DocumentElementType, b: DocumentElementType) => {
         if (a.position > b.position) return 1
         else return -1
     }
 
     const [isEmojiShown, setIsEmojiShown] = useState(true)
-    const [cover, setCover] = useState(gradient_1)
     const [isCover, setIsCover] = useState(true)
+    const [cover, setCover] = useState(gradient_1)
 
     return (
         <div id={'document'}>
@@ -73,8 +73,9 @@ export const Document = () => {
                 <Controls isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown} isCover={isCover}
                           setIsCover={setIsCover} setCover={setCover}/>
                 <Title/>
-                {documentItems.sort(documentItemsSorter).map(item => <DefaultElement key={item.id} item={item}
-                                                                                     dragging={dragging}/>)}
+                {documentElements.sort(documentItemsSorter).map(element => <DefaultElement key={element.id}
+                                                                                           element={element}
+                                                                                           dragging={dragging}/>)}
             </div>
         </div>
     )

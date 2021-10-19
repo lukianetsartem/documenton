@@ -1,23 +1,30 @@
 import React, {useState, DragEvent} from "react";
-import TextareaAutosize from "react-textarea-autosize";
-import {DocumentItemType} from "../../Document";
-import {Menu} from "./Menu";
-import {ElementControls } from "./Controls";
-import '../../../scss/element.scss'
+import {DocumentElementType} from "../../Document";
+import {ElementControls} from "./Controls";
+import '../../../scss/element.scss';
+import {Text} from '../Elements/Text'
 
 type Props = {
-    dragging: (type: string, e: DragEvent<HTMLDivElement>, item: DocumentItemType) => void,
-    item: DocumentItemType,
+    dragging: (type: string, e: DragEvent<HTMLDivElement>, item: DocumentElementType) => void,
+    element: DocumentElementType,
 }
 
 export const DefaultElement = (props: Props) => {
-    const {item, dragging} = props
-    const [value, setValue] = useState(item.text)
-    const [menu, setMenu] = useState(true)
-    const [placeholder, setPlaceholder] = useState('')
+    const {element, dragging} = props
+    const [value, setValue] = useState(element.text)
+    const [menu, setMenu] = useState(false)
+    const [placeholder, setPlaceholder] = useState(element.placeholder)
 
+    // Dragging code
     const draggingHandler = (type: string, e: DragEvent<HTMLDivElement>) => {
-        dragging(type, e, props.item)
+        dragging(type, e, element)
+    }
+    const dragEvents = {
+        onDragStart: (e: DragEvent<HTMLDivElement>) => draggingHandler("start", e),
+        onDragLeave: (e: DragEvent<HTMLDivElement>) => draggingHandler("leave", e),
+        onDragEnd: (e: DragEvent<HTMLDivElement>) => draggingHandler("end", e),
+        onDragOver: (e: DragEvent<HTMLDivElement>) => draggingHandler("over", e),
+        onDrop: (e: DragEvent<HTMLDivElement>) => draggingHandler("drop", e),
     }
 
     // Check if user clicked outside menu
@@ -27,10 +34,11 @@ export const DefaultElement = (props: Props) => {
         document.removeEventListener("click", clickOutsideMenu)
     }
 
+    // Textarea value changing catcher
     const onValueChanging = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const value = e.target.value
-        setValue(value)
 
+        setValue(value)
         if (value === '/') {
             setMenu(true)
             document.addEventListener("click", clickOutsideMenu)
@@ -39,24 +47,31 @@ export const DefaultElement = (props: Props) => {
         }
     }
 
-    const dragEvents = {
-        onDragStart: (e: DragEvent<HTMLDivElement>) => draggingHandler("start", e),
-        onDragLeave: (e: DragEvent<HTMLDivElement>) => draggingHandler("leave", e),
-        onDragEnd: (e: DragEvent<HTMLDivElement>) => draggingHandler("end", e),
-        onDragOver: (e: DragEvent<HTMLDivElement>) => draggingHandler("over", e),
-        onDrop: (e: DragEvent<HTMLDivElement>) => draggingHandler("drop", e),
+    const elementSetter = (element: DocumentElementType) => {
+        const textProps = {
+            menu: menu,
+            value: value,
+            placeholder: placeholder,
+            initialPlaceholder: element.placeholder,
+            type: element.type,
+            setPlaceholder: setPlaceholder,
+            onValueChanging: onValueChanging,
+            clickOutsideMenu: clickOutsideMenu
+        }
+
+        switch (element.type) {
+            case "TEXT":
+            case "BIG_HEADING":
+            case "MEDIUM_HEADING":
+            case "SMALL_HEADING":
+                return <Text {...textProps}/>
+        }
     }
 
     return (
         <div className={'element'} {...dragEvents}>
             <ElementControls/>
-            <div className={'element-field'}>
-                {menu && <Menu clickOutsideMenu={clickOutsideMenu}/>}
-                <TextareaAutosize value={value} placeholder={placeholder} className={'text-field'}
-                                  onChange={e => onValueChanging(e)}
-                                  onFocus={() => setPlaceholder('Type \'/\' for commands')}
-                                  onBlur={() => setPlaceholder('')}/>
-            </div>
+            {elementSetter(element)}
         </div>
     )
 }

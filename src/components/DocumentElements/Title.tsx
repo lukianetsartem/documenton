@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 export const Title = () => {
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState('Documenton')
 
     return (
         <div className={'title-item'}>
