@@ -1,5 +1,5 @@
 import React, {useState, DragEvent} from "react";
-import {DocumentElementType} from "../../Document";
+import {ChangeElementTypeData, DocumentElementType} from "../../Document";
 import {ElementControls} from "./Controls";
 import '../../../scss/element.scss';
 import {Text} from '../Elements/Text'
@@ -7,13 +7,14 @@ import {Text} from '../Elements/Text'
 type Props = {
     dragging: (type: string, e: DragEvent<HTMLDivElement>, item: DocumentElementType) => void,
     element: DocumentElementType,
+    changeElementType: (data:ChangeElementTypeData) => void
 }
 
 export const DefaultElement = (props: Props) => {
-    const {element, dragging} = props
+    const {element, dragging, changeElementType} = props
     const [value, setValue] = useState(element.text)
     const [menu, setMenu] = useState(false)
-    const [placeholder, setPlaceholder] = useState(element.placeholder)
+    const [placeholder, setPlaceholder] = useState('')
 
     // Dragging code
     const draggingHandler = (type: string, e: DragEvent<HTMLDivElement>) => {
@@ -34,7 +35,7 @@ export const DefaultElement = (props: Props) => {
         document.removeEventListener("click", clickOutsideMenu)
     }
 
-    // Textarea value changing catcher
+    // qTextarea value changing catcher
     const onValueChanging = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const value = e.target.value
 
@@ -47,16 +48,19 @@ export const DefaultElement = (props: Props) => {
         }
     }
 
+    // Setting all elements of the document depending on the type
     const elementSetter = (element: DocumentElementType) => {
         const textProps = {
             menu: menu,
             value: value,
             placeholder: placeholder,
             initialPlaceholder: element.placeholder,
+            id: element.id,
             type: element.type,
             setPlaceholder: setPlaceholder,
             onValueChanging: onValueChanging,
-            clickOutsideMenu: clickOutsideMenu
+            clickOutsideMenu: clickOutsideMenu,
+            changeElementType: changeElementType,
         }
 
         switch (element.type) {

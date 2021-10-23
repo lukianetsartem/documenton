@@ -14,6 +14,12 @@ export type DocumentElementType = {
     placeholder: string,
 }
 
+export type ChangeElementTypeData = {
+    id:number,
+    type:string,
+    placeholder:string
+}
+
 export const Document = () => {
     const elements = [
         {id: 1, position: 1, text: "", type: "TEXT", placeholder: 'Type \'/\' for commands'},
@@ -55,7 +61,6 @@ export const Document = () => {
             }
         }
     }
-
     const documentItemsSorter = (a: DocumentElementType, b: DocumentElementType) => {
         if (a.position > b.position) return 1
         else return -1
@@ -64,6 +69,12 @@ export const Document = () => {
     const [isEmojiShown, setIsEmojiShown] = useState(true)
     const [isCover, setIsCover] = useState(true)
     const [cover, setCover] = useState(gradient_1)
+
+    // Changing element type (for example: text => heading)
+    const changeElementType = (data:ChangeElementTypeData) => {
+        const {id, type, placeholder} = data
+        setDocumentElements(elements.map(e => e.id === id ? {...e, type, placeholder} : e))
+    }
 
     return (
         <div id={'document'}>
@@ -75,6 +86,7 @@ export const Document = () => {
                 <Title/>
                 {documentElements.sort(documentItemsSorter).map(element => <DefaultElement key={element.id}
                                                                                            element={element}
+                                                                                           changeElementType={changeElementType}
                                                                                            dragging={dragging}/>)}
             </div>
         </div>

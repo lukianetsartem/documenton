@@ -1,6 +1,7 @@
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {Menu} from "../Element/Menu";
 import TextareaAutosize from "react-textarea-autosize";
+import {ChangeElementTypeData} from "../../Document";
 
 type Props = {
     menu: boolean,
@@ -9,17 +10,33 @@ type Props = {
     initialPlaceholder: string,
     onValueChanging: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
     setPlaceholder: Dispatch<SetStateAction<string>>,
+    changeElementType: (data: ChangeElementTypeData) => void
     clickOutsideMenu: () => void,
     type: string,
+    id: number,
 }
 
 export const Text = (props: Props) => {
-    const {menu, value, placeholder, initialPlaceholder, type, onValueChanging, clickOutsideMenu, setPlaceholder} = props
+    const {
+        id,
+        menu,
+        value,
+        placeholder,
+        initialPlaceholder,
+        type,
+        onValueChanging,
+        clickOutsideMenu,
+        setPlaceholder,
+        changeElementType
+    } = props
     const [textStyle, setTextStyle] = useState('')
 
     useEffect(() => {
         // Setting text styles depending on type
         switch (type) {
+            case "TEXT":
+                setTextStyle('')
+                break
             case "BIG_HEADING":
                 setTextStyle('big-heading')
                 break
@@ -29,11 +46,11 @@ export const Text = (props: Props) => {
             case "SMALL_HEADING":
                 setTextStyle('small-heading')
         }
-    }, [])
+    }, [type])
 
     return (
         <div className={'element-field'}>
-            {menu && <Menu clickOutsideMenu={clickOutsideMenu}/>}
+            {menu && <Menu id={id} clickOutsideMenu={clickOutsideMenu} changeElementType={changeElementType}/>}
             <TextareaAutosize value={value} placeholder={placeholder} className={`text-field ${textStyle}`}
                               onChange={e => onValueChanging(e)}
                               onFocus={() => setPlaceholder(initialPlaceholder)}

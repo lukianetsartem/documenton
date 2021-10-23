@@ -1,7 +1,11 @@
 import React, {useRef} from "react";
+import {MenuOption} from "./MenuOption";
+import {ChangeElementTypeData} from "../../Document";
 
 type Props = {
-    clickOutsideMenu: () => void
+    clickOutsideMenu: () => void,
+    changeElementType: (data: ChangeElementTypeData) => void,
+    id: number,
 }
 
 export const Menu = (props: Props) => {
@@ -14,24 +18,28 @@ export const Menu = (props: Props) => {
                 {
                     title: 'Text',
                     subtitle: 'Just start writing plain text',
+                    placeholder: 'Type \'/\' for commands',
                     type: 'TEXT',
                     cover: 'https://www.notion.so/images/blocks/text.9fdb530b.png'
                 },
                 {
                     title: 'Heading 1',
                     subtitle: 'Big section heading.',
+                    placeholder: 'Big Heading',
                     type: 'BIG_HEADING',
                     cover: 'https://www.notion.so/images/blocks/header.57a7576a.png'
                 },
                 {
                     title: 'Heading 2',
                     subtitle: 'Medium section heading.',
+                    placeholder: 'Medium heading',
                     type: 'MEDIUM_HEADING',
                     cover: 'https://www.notion.so/images/blocks/subheader.9aab4769.png'
                 },
                 {
                     title: 'Heading 3',
                     subtitle: 'Small section heading.',
+                    placeholder: 'Small heading',
                     type: 'SMALL_HEADING',
                     cover: 'https://www.notion.so/images/blocks/subsubheader.d0ed0bb3.png'
                 },
@@ -40,17 +48,12 @@ export const Menu = (props: Props) => {
     ]
 
     return (
-        <div ref={menuRef} className={'element-menu'} onClick={() => alert('click')}
+        <div ref={menuRef} className={'element-menu'}
              onMouseLeave={() => document.addEventListener("click", props.clickOutsideMenu)}>
-            {sections.map(s => <div className={'element-menu-section'}>
+            {sections.map(s => <div className={'element-menu-section'} key={s.section}>
                 <p className={'element-menu-section-title'}>{s.section}</p>
-                {s.options.map(o => <div className={'element-menu-option'}>
-                    <img className={'element-menu-option-cover'} alt='' src={o.cover}/>
-                    <div className={'element-menu-option-text'}>
-                        <p className={'element-menu-option-title'}>{o.title}</p>
-                        <p className={'element-menu-option-subtitle'}>{o.subtitle}</p>
-                    </div>
-                </div>)}
+                {s.options.map(o => <MenuOption key={o.type} id={props.id} option={o}
+                                                changeElementType={props.changeElementType}/>)}
             </div>)}
         </div>
     )
