@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
-import {Menu} from "../Element/Menu";
+import {Menu} from "../DefaultElement/Menu";
 import TextareaAutosize from "react-textarea-autosize";
 import {ChangeElementTypeData} from "../../Document";
 

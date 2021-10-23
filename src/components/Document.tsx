@@ -1,9 +1,9 @@
 import React, {useState, DragEvent} from "react";
 import {Controls} from "./DocumentElements/Controls";
 import {Title} from "./DocumentElements/Title";
-import {DefaultElement} from "./DocumentElements/Element/Element";
-import {Cover} from "./DocumentElements/Cover";
-import {Emoji} from "./DocumentElements/Emoji";
+import {DefaultElement} from "./DocumentElements/DefaultElement/DefaultElement";
+import {Cover} from "./DocumentElements/Cover/Cover";
+import {Emoji} from "./DocumentElements/Emoji/Emoji";
 import gradient_1 from '../assets/backgrounds/gradients/gradient_1.png';
 
 export type DocumentElementType = {
@@ -70,7 +70,7 @@ export const Document = () => {
     const [isCover, setIsCover] = useState(true)
     const [cover, setCover] = useState(gradient_1)
 
-    // Changing element type (for example: text => heading)
+    // Changing element type feature (for example: text => heading)
     const changeElementType = (data:ChangeElementTypeData) => {
         const {id, type, placeholder} = data
         setDocumentElements(elements.map(e => e.id === id ? {...e, type, placeholder} : e))

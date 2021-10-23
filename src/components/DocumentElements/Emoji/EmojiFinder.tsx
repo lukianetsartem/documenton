@@ -1,7 +1,7 @@
 import React, {Dispatch, SetStateAction, SyntheticEvent} from "react";
 import Picker from "emoji-picker-react";
-import close from "../../assets/icons/close.png";
-import trash from "../../assets/icons/trash.png";
+import close from "../../../assets/icons/close.png";
+import trash from "../../../assets/icons/trash.png";
 
 type EmojiFinderProps = {
     selectedEmoji: string,

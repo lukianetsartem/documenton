@@ -1,14 +1,14 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
-import yellow from '../../assets/backgrounds/collors/yellow.png'
-import blue from '../../assets/backgrounds/collors/blue.png'
-import red from '../../assets/backgrounds/collors/red.png'
-import beige from '../../assets/backgrounds/collors/beige.png'
-import gradient_1 from '../../assets/backgrounds/gradients/gradient_1.png'
-import gradient_2 from '../../assets/backgrounds/gradients/gradient_2.png'
-import gradient_3 from '../../assets/backgrounds/gradients/gradient_3.png'
-import woodcut_1 from '../../assets/backgrounds/japan/woodcut_1.jpg'
-import woodcut_2 from '../../assets/backgrounds/japan/woodcut_2.jpg'
-import woodcut_3 from '../../assets/backgrounds/japan/woodcut_3.jpg'
+import yellow from '../../../assets/backgrounds/collors/yellow.png'
+import blue from '../../../assets/backgrounds/collors/blue.png'
+import red from '../../../assets/backgrounds/collors/red.png'
+import beige from '../../../assets/backgrounds/collors/beige.png'
+import gradient_1 from '../../../assets/backgrounds/gradients/gradient_1.png'
+import gradient_2 from '../../../assets/backgrounds/gradients/gradient_2.png'
+import gradient_3 from '../../../assets/backgrounds/gradients/gradient_3.png'
+import woodcut_1 from '../../../assets/backgrounds/japan/woodcut_1.jpg'
+import woodcut_2 from '../../../assets/backgrounds/japan/woodcut_2.jpg'
+import woodcut_3 from '../../../assets/backgrounds/japan/woodcut_3.jpg'
 
 type Props = {
     setCover: Dispatch<SetStateAction<string>>,

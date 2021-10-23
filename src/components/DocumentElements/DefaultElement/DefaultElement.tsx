@@ -35,7 +35,7 @@ export const DefaultElement = (props: Props) => {
         document.removeEventListener("click", clickOutsideMenu)
     }
 
-    // qTextarea value changing catcher
+    // Textarea value changing catcher
     const onValueChanging = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const value = e.target.value
 
