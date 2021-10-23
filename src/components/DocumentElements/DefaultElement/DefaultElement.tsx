@@ -1,5 +1,5 @@
 import React, {useState, DragEvent} from "react";
-import {ChangeElementTypeData, DocumentElementType} from "../../Document";
+import {ChangeElementTypeData, ChangeToDoStateData, DocumentElementType} from "../../Document";
 import {ElementControls} from "./Controls";
 import '../../../scss/element.scss';
 import {Text} from '../Elements/Text'
@@ -8,10 +8,11 @@ type Props = {
     dragging: (type: string, e: DragEvent<HTMLDivElement>, item: DocumentElementType) => void,
     element: DocumentElementType,
     changeElementType: (data:ChangeElementTypeData) => void
+    changeToDoState: (data:ChangeToDoStateData) => void
 }
 
 export const DefaultElement = (props: Props) => {
-    const {element, dragging, changeElementType} = props
+    const {element, dragging, changeElementType, changeToDoState} = props
     const [value, setValue] = useState(element.text)
     const [menu, setMenu] = useState(false)
     const [placeholder, setPlaceholder] = useState('')
@@ -50,24 +51,26 @@ export const DefaultElement = (props: Props) => {
 
     // Setting all elements of the document depending on the type
     const elementSetter = (element: DocumentElementType) => {
-        const textProps = {
-            menu: menu,
-            value: value,
-            placeholder: placeholder,
-            initialPlaceholder: element.placeholder,
-            id: element.id,
-            type: element.type,
-            setPlaceholder: setPlaceholder,
-            onValueChanging: onValueChanging,
-            clickOutsideMenu: clickOutsideMenu,
-            changeElementType: changeElementType,
-        }
-
         switch (element.type) {
             case "TEXT":
             case "BIG_HEADING":
             case "MEDIUM_HEADING":
             case "SMALL_HEADING":
+            case "TO_DO":
+                const textProps = {
+                    menu: menu,
+                    value: value,
+                    placeholder: placeholder,
+                    id: element.id,
+                    type: element.type,
+                    initialPlaceholder: element.placeholder,
+                    isChecked: element.isChecked,
+                    setPlaceholder: setPlaceholder,
+                    onValueChanging: onValueChanging,
+                    clickOutsideMenu: clickOutsideMenu,
+                    changeElementType: changeElementType,
+                    changeToDoState: changeToDoState,
+                }
                 return <Text {...textProps}/>
         }
     }

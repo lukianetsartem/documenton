@@ -12,6 +12,7 @@ export type DocumentElementType = {
     text: string,
     type: string,
     placeholder: string,
+    isChecked?: boolean
 }
 
 export type ChangeElementTypeData = {
@@ -19,15 +20,21 @@ export type ChangeElementTypeData = {
     type:string,
     placeholder:string
 }
+export type ChangeToDoStateData = {
+    id:number,
+    isChecked:boolean
+}
 
 export const Document = () => {
     const elements = [
-        {id: 1, position: 1, text: "", type: "TEXT", placeholder: 'Type \'/\' for commands'},
+        {id: 1, position: 1, text: "To do:", type: "TEXT", placeholder: 'Type \'/\' for commands'},
+        {id: 2, position: 2, text: "", type: "TO_DO", placeholder: 'To-do', isChecked: false},
     ]
 
     const [documentElements, setDocumentElements] = useState(elements)
     const [currentItem, setCurrentItem] = useState<DocumentElementType>()
 
+    // Dragging code
     const dragging = (type: string, e: DragEvent<HTMLDivElement>, item: DocumentElementType) => {
         switch (type) {
             case "start": {
@@ -76,6 +83,12 @@ export const Document = () => {
         setDocumentElements(elements.map(e => e.id === id ? {...e, type, placeholder} : e))
     }
 
+    // Changing isChecked property for to-do item
+    const changeToDoState = (data:ChangeToDoStateData) => {
+        const {id, isChecked} = data
+        setDocumentElements(documentElements.map(e => e.id === id ? {...e, isChecked} : e))
+    }
+
     return (
         <div id={'document'}>
             <Cover cover={cover} setCover={setCover} isCover={isCover} setIsCover={setIsCover}/>
@@ -87,6 +100,7 @@ export const Document = () => {
                 {documentElements.sort(documentItemsSorter).map(element => <DefaultElement key={element.id}
                                                                                            element={element}
                                                                                            changeElementType={changeElementType}
+                                                                                           changeToDoState={changeToDoState}
                                                                                            dragging={dragging}/>)}
             </div>
         </div>
