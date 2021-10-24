@@ -14,21 +14,21 @@ export type DocumentElementType = {
     placeholder: string,
     isChecked?: boolean
 }
-
 export type ChangeElementTypeData = {
-    id:number,
-    type:string,
-    placeholder:string
+    id: number,
+    type: string,
+    placeholder: string
 }
 export type ChangeToDoStateData = {
-    id:number,
-    isChecked:boolean
+    id: number,
+    isChecked: boolean
 }
 
 export const Document = () => {
     const elements = [
         {id: 1, position: 1, text: "To do:", type: "TEXT", placeholder: 'Type \'/\' for commands'},
-        {id: 2, position: 2, text: "", type: "TO_DO", placeholder: 'To-do', isChecked: false},
+        {id: 2, position: 2, text: "Fix car", type: "TO_DO", placeholder: 'To-do', isChecked: true},
+        {id: 3, position: 3, text: "Drink milk", type: "TO_DO", placeholder: 'To-do', isChecked: false},
     ]
 
     const [documentElements, setDocumentElements] = useState(elements)
@@ -78,13 +78,40 @@ export const Document = () => {
     const [cover, setCover] = useState(gradient_1)
 
     // Changing element type feature (for example: text => heading)
-    const changeElementType = (data:ChangeElementTypeData) => {
+    const changeElementType = (data: ChangeElementTypeData) => {
         const {id, type, placeholder} = data
-        setDocumentElements(elements.map(e => e.id === id ? {...e, type, placeholder} : e))
+        setDocumentElements(documentElements.map(e => {
+            if (e.id === id) {
+                switch (type) {
+                    case "TEXT":
+                    case "BIG_HEADING":
+                    case "MEDIUM_HEADING":
+                    case "SMALL_HEADING":
+                        return {
+                            id: e.id,
+                            position: e.position,
+                            text: e.text,
+                            type: type,
+                            placeholder: placeholder
+                        }
+                    case "TO_DO":
+                        return {
+                            id: e.id,
+                            position: e.position,
+                            text: e.text,
+                            type: type,
+                            placeholder: placeholder,
+                            isChecked: false
+                        }
+                    default:
+                        return e
+                }
+            } else return e
+        }))
     }
 
     // Changing isChecked property for to-do item
-    const changeToDoState = (data:ChangeToDoStateData) => {
+    const changeToDoState = (data: ChangeToDoStateData) => {
         const {id, isChecked} = data
         setDocumentElements(documentElements.map(e => e.id === id ? {...e, isChecked} : e))
     }
@@ -97,11 +124,9 @@ export const Document = () => {
                 <Controls isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown} isCover={isCover}
                           setIsCover={setIsCover} setCover={setCover}/>
                 <Title/>
-                {documentElements.sort(documentItemsSorter).map(element => <DefaultElement key={element.id}
-                                                                                           element={element}
-                                                                                           changeElementType={changeElementType}
-                                                                                           changeToDoState={changeToDoState}
-                                                                                           dragging={dragging}/>)}
+                {documentElements.sort(documentItemsSorter).map(element =>
+                    <DefaultElement key={element.id} element={element} changeElementType={changeElementType}
+                                    changeToDoState={changeToDoState} dragging={dragging}/>)}
             </div>
         </div>
     )

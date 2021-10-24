@@ -34,6 +34,7 @@ export const Text = (props: Props) => {
         isChecked
     } = props
     const [textStyle, setTextStyle] = useState('')
+    const [checked] = useState(isChecked)
 
     useEffect(() => {
         // Setting text styles depending on type
@@ -51,32 +52,27 @@ export const Text = (props: Props) => {
                 setTextStyle('small-heading')
                 break
             case "TO_DO":
-                setTextStyle('')
+                if (checked) setTextStyle('to-do-done')
                 setPlaceholder(initialPlaceholder)
         }
-    }, [type, initialPlaceholder, setPlaceholder])
+    }, [checked, type, initialPlaceholder, setPlaceholder])
 
-    const onToDoChange = (e:boolean) => {
-        if(e) {
-            setTextStyle('to-do-done')
-            changeToDoState({id: id, isChecked: true})
-        } else {
-            setTextStyle('')
-            changeToDoState({id: id, isChecked: false})
-        }
+    const onToDoChange = (style: string, isChecked: boolean) => {
+        setTextStyle(style)
+        changeToDoState({id: id, isChecked: isChecked})
     }
-
-    console.log(isChecked)
 
     return (
         <div className={'element-field'}>
             {menu && <Menu id={id} clickOutsideMenu={clickOutsideMenu} changeElementType={changeElementType}/>}
-            {isChecked !== undefined &&
-            <input className={'to-do'} type={'checkbox'} onChange={(e) => onToDoChange(e.target.checked)}/>}
+            {checked !== undefined && <input className={'to-do'} type={'checkbox'} defaultChecked={checked}
+                                             onChange={(e) => e.target.checked
+                                                     ? onToDoChange('to-do-done', true)
+                                                     : onToDoChange('', false)}/>}
             <TextareaAutosize value={value} placeholder={placeholder} className={`text-field ${textStyle}`}
                               onChange={e => onValueChanging(e)}
                               onFocus={() => setPlaceholder(initialPlaceholder)}
-                              onBlur={() => isChecked === undefined && setPlaceholder('')}/>
+                              onBlur={() => checked === undefined && setPlaceholder('')}/>
         </div>
     )
 }

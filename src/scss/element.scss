@@ -35,6 +35,31 @@ $textColor: rgb(55, 53, 47);
     -webkit-box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.29);
     -moz-box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.29);
     box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.29);
+    overflow-y: auto;
+    z-index: 1;
+}
+
+// Element menu scrollbar styles
+
+// Firefox
+.element-menu {
+    scrollbar-width: auto;
+    scrollbar-color: #e6e6e6 #ffffff;
+}
+
+// Chrome, Edge, and Safari
+.element-menu::-webkit-scrollbar {
+    width: 12px;
+}
+
+.element-menu::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.element-menu::-webkit-scrollbar-thumb {
+    background-color: #e6e6e6;
+    border-radius: 0px;
+    border: 0px none #ffffff;
 }
 
 .element-menu-section {
@@ -157,7 +182,7 @@ $textColor: rgb(55, 53, 47);
     color: $placeholderColor;
 }
 
-$strikeTextColor: rgba(0, 0, 0, 0.36);
+$strikeTextColor: rgb(232, 232, 232);
 
 .to-do-done {
     color: $strikeTextColor;

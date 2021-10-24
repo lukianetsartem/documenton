@@ -43,6 +43,13 @@ export const Menu = (props: Props) => {
                     type: 'SMALL_HEADING',
                     cover: 'https://www.notion.so/images/blocks/subsubheader.d0ed0bb3.png'
                 },
+                {
+                    title: 'To-do list',
+                    subtitle: 'Track tasks with a to-do list.',
+                    placeholder: 'To-do',
+                    type: 'TO_DO',
+                    cover: 'https://www.notion.so/images/blocks/to-do.f8d20542.png'
+                },
             ]
         }
     ]
