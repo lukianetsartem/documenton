@@ -2,6 +2,7 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {Menu} from "../DefaultElement/Menu";
 import TextareaAutosize from "react-textarea-autosize";
 import {ChangeElementTypeData, ChangeToDoStateData} from "../../Document";
+import {Checkbox} from "./Checkbox";
 
 type Props = {
     menu: boolean,
@@ -20,21 +21,10 @@ type Props = {
 
 export const Text = (props: Props) => {
     const {
-        id,
-        menu,
-        type,
-        value,
-        placeholder,
-        initialPlaceholder,
-        onValueChanging,
-        clickOutsideMenu,
-        setPlaceholder,
-        changeElementType,
-        changeToDoState,
-        isChecked
+        id, menu, type, value, placeholder, initialPlaceholder, onValueChanging, clickOutsideMenu, setPlaceholder,
+        changeElementType, changeToDoState, isChecked
     } = props
     const [textStyle, setTextStyle] = useState('')
-    const [checked] = useState(isChecked)
 
     useEffect(() => {
         // Setting text styles depending on type
@@ -52,10 +42,10 @@ export const Text = (props: Props) => {
                 setTextStyle('small-heading')
                 break
             case "TO_DO":
-                if (checked) setTextStyle('to-do-done')
+                isChecked ? setTextStyle('to-do-done') : setTextStyle('')
                 setPlaceholder(initialPlaceholder)
         }
-    }, [checked, type, initialPlaceholder, setPlaceholder])
+    }, [isChecked, type, initialPlaceholder, setPlaceholder])
 
     const onToDoChange = (style: string, isChecked: boolean) => {
         setTextStyle(style)
@@ -65,14 +55,11 @@ export const Text = (props: Props) => {
     return (
         <div className={'element-field'}>
             {menu && <Menu id={id} clickOutsideMenu={clickOutsideMenu} changeElementType={changeElementType}/>}
-            {checked !== undefined && <input className={'to-do'} type={'checkbox'} defaultChecked={checked}
-                                             onChange={(e) => e.target.checked
-                                                     ? onToDoChange('to-do-done', true)
-                                                     : onToDoChange('', false)}/>}
+            {isChecked !== undefined && <Checkbox isChecked={isChecked} onToDoChange={onToDoChange}/>}
             <TextareaAutosize value={value} placeholder={placeholder} className={`text-field ${textStyle}`}
                               onChange={e => onValueChanging(e)}
                               onFocus={() => setPlaceholder(initialPlaceholder)}
-                              onBlur={() => checked === undefined && setPlaceholder('')}/>
+                              onBlur={() => isChecked === undefined && setPlaceholder('')}/>
         </div>
     )
 }
