@@ -10,7 +10,6 @@ export const App = () => {
 
             </section>
             <section id={'content'}>
-                <header/>
                 <Document/>
             </section>
         </main>

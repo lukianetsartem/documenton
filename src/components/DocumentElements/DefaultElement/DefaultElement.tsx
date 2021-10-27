@@ -2,7 +2,8 @@ import React, {useState, DragEvent} from "react";
 import {ChangeElementTypeData, ChangeToDoStateData, DocumentElementType} from "../../Document";
 import {ElementControls} from "./Controls";
 import '../../../scss/element.scss';
-import {Text} from '../Elements/Text'
+import {Text} from '../Elements/Text/Text'
+import { Media } from "../Elements/Media/Media";
 
 type Props = {
     dragging: (type: string, e: DragEvent<HTMLDivElement>, item: DocumentElementType) => void,
@@ -13,7 +14,7 @@ type Props = {
 
 export const DefaultElement = (props: Props) => {
     const {element, dragging, changeElementType, changeToDoState} = props
-    const [value, setValue] = useState(element.text)
+    const [value, setValue] = useState(element.value)
     const [menu, setMenu] = useState(false)
     const [placeholder, setPlaceholder] = useState('')
 
@@ -49,6 +50,10 @@ export const DefaultElement = (props: Props) => {
         }
     }
 
+    const setMediaLink = (value:string) => {
+        console.log(value)
+    }
+
     // Setting all elements of the document depending on the type
     const elementSetter = (element: DocumentElementType) => {
         switch (element.type) {
@@ -72,6 +77,14 @@ export const DefaultElement = (props: Props) => {
                     changeToDoState: changeToDoState,
                 }
                 return <Text {...textProps}/>
+            case "VIDEO":
+                const mediaProps = {
+                    value: value,
+                    type: element.type,
+                    title: element.placeholder,
+                    setMediaLink: setMediaLink,
+                }
+                return <Media {...mediaProps}/>
         }
     }
 

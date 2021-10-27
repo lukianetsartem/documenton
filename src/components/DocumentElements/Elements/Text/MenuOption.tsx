@@ -1,5 +1,5 @@
 import React from "react";
-import {ChangeElementTypeData} from "../../Document";
+import {ChangeElementTypeData} from "../../../Document";
 
 type Props = {
     changeElementType: (data: ChangeElementTypeData) => void

@@ -1,6 +1,6 @@
 import React, {useRef} from "react";
 import {MenuOption} from "./MenuOption";
-import {ChangeElementTypeData} from "../../Document";
+import {ChangeElementTypeData} from "../../../Document";
 
 type Props = {
     clickOutsideMenu: () => void,
@@ -56,6 +56,7 @@ export const Menu = (props: Props) => {
 
     return (
         <div ref={menuRef} className={'element-menu'}
+             onMouseOver={() => document.removeEventListener("click", props.clickOutsideMenu)}
              onMouseLeave={() => document.addEventListener("click", props.clickOutsideMenu)}>
             {sections.map(s => <div className={'element-menu-section'} key={s.section}>
                 <p className={'element-menu-section-title'}>{s.section}</p>

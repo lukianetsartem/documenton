@@ -1,7 +1,7 @@
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
-import {Menu} from "../DefaultElement/Menu";
+import {Menu} from "./Menu";
 import TextareaAutosize from "react-textarea-autosize";
-import {ChangeElementTypeData, ChangeToDoStateData} from "../../Document";
+import {ChangeElementTypeData, ChangeToDoStateData} from "../../../Document";
 import {Checkbox} from "./Checkbox";
 
 type Props = {

@@ -9,7 +9,7 @@ import gradient_1 from '../assets/backgrounds/gradients/gradient_1.png';
 export type DocumentElementType = {
     id: number,
     position: number,
-    text: string,
+    value: string,
     type: string,
     placeholder: string,
     isChecked?: boolean
@@ -26,9 +26,8 @@ export type ChangeToDoStateData = {
 
 export const Document = () => {
     const elements = [
-        {id: 1, position: 1, text: "To do:", type: "TEXT", placeholder: 'Type \'/\' for commands'},
-        {id: 2, position: 2, text: "Fix car", type: "TO_DO", placeholder: 'To-do', isChecked: true},
-        {id: 3, position: 3, text: "Drink milk", type: "TO_DO", placeholder: 'To-do', isChecked: false},
+        {id: 1, position: 1, value: "Video", type: "TEXT", placeholder: 'Type \'/\' for commands'},
+        {id: 2, position: 2, value: "", type: "VIDEO", placeholder: 'Embed a youtube video'},
     ]
 
     const [documentElements, setDocumentElements] = useState(elements)
@@ -87,10 +86,11 @@ export const Document = () => {
                     case "BIG_HEADING":
                     case "MEDIUM_HEADING":
                     case "SMALL_HEADING":
+                    case "VIDEO":
                         return {
                             id: e.id,
                             position: e.position,
-                            text: e.text,
+                            value: e.value,
                             type: type,
                             placeholder: placeholder
                         }
@@ -98,7 +98,7 @@ export const Document = () => {
                         return {
                             id: e.id,
                             position: e.position,
-                            text: e.text,
+                            value: e.value,
                             type: type,
                             placeholder: placeholder,
                             isChecked: false
@@ -118,6 +118,7 @@ export const Document = () => {
 
     return (
         <div id={'document'}>
+            <header id={'header'}/>
             <Cover cover={cover} setCover={setCover} isCover={isCover} setIsCover={setIsCover}/>
             <div id={'document-content'}>
                 {isEmojiShown && <Emoji isEmojiShown={isEmojiShown} setIsEmojiShown={setIsEmojiShown}/>}
