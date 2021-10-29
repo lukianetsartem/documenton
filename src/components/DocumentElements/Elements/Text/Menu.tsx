@@ -51,6 +51,25 @@ export const Menu = (props: Props) => {
                     cover: 'https://www.notion.so/images/blocks/to-do.f8d20542.png'
                 },
             ]
+        },
+        {
+            section: 'Media',
+            options: [
+                {
+                    title: 'Video',
+                    subtitle: 'Embed from YouTube',
+                    placeholder: 'Embed a YouTube video',
+                    type: 'VIDEO',
+                    cover: 'https://www.notion.so/images/blocks/video.ceeec2c7.png'
+                },
+                {
+                    title: 'Picture',
+                    subtitle: 'Embed with a link',
+                    placeholder: 'Embed a picture by link',
+                    type: 'PICTURE',
+                    cover: 'https://www.notion.so/images/blocks/image.33d80a98.png'
+                },
+            ]
         }
     ]
 

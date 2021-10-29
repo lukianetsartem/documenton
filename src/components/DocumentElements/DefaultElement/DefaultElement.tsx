@@ -50,8 +50,14 @@ export const DefaultElement = (props: Props) => {
         }
     }
 
-    const setMediaLink = (value:string) => {
-        console.log(value)
+    const setMediaLink = (value:string, type:string) => {
+        switch (type) {
+            case "VIDEO":
+                setValue(value.replace('https://youtu.be/', ''))
+                break
+            case "PICTURE":
+                setValue(value)
+        }
     }
 
     // Setting all elements of the document depending on the type
@@ -78,6 +84,7 @@ export const DefaultElement = (props: Props) => {
                 }
                 return <Text {...textProps}/>
             case "VIDEO":
+            case "PICTURE":
                 const mediaProps = {
                     value: value,
                     type: element.type,

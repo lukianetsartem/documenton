@@ -2,7 +2,7 @@ import clear from "../../../../assets/icons/clear.png";
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 
 type Props = {
-    setMediaLink: (value: string) => void,
+    setMediaLink: (value: string, type: string) => void,
     setMenu: Dispatch<SetStateAction<boolean>>,
     type: string,
 }
@@ -27,11 +27,14 @@ export const Menu = (props: Props) => {
         switch (type) {
             case "VIDEO":
                 setMenuParts('Paste the video link...', 'Embed video', 'Works with youtube videos')
+                break
+            case "PICTURE":
+                setMenuParts('Paste the picture link...', 'Embed picture', 'Works with any image from the web')
         }
     }, [type])
 
     const onSubmit = () => {
-        setMediaLink(inputValue)
+        setMediaLink(inputValue, type)
         clickOutsideMenu()
     }
 

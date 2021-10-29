@@ -26,8 +26,8 @@ export type ChangeToDoStateData = {
 
 export const Document = () => {
     const elements = [
-        {id: 1, position: 1, value: "Video", type: "TEXT", placeholder: 'Type \'/\' for commands'},
-        {id: 2, position: 2, value: "", type: "VIDEO", placeholder: 'Embed a youtube video'},
+        {id: 1, position: 1, value: "", type: "VIDEO", placeholder: 'Embed a YouTube video'},
+        {id: 2, position: 2, value: "", type: "PICTURE", placeholder: 'Embed a picture by link'},
     ]
 
     const [documentElements, setDocumentElements] = useState(elements)
