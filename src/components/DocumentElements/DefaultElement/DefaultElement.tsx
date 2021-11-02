@@ -1,4 +1,4 @@
-import React, {useState, DragEvent} from "react";
+import React, {useState} from "react";
 import {ChangeElementTypeData, ChangeToDoStateData, DocumentElementType} from "../../Document";
 import {ElementControls} from "./Controls";
 import '../../../scss/element.scss';
@@ -6,29 +6,16 @@ import {Text} from '../Elements/Text/Text'
 import { Media } from "../Elements/Media/Media";
 
 type Props = {
-    dragging: (type: string, e: DragEvent<HTMLDivElement>, item: DocumentElementType) => void,
     element: DocumentElementType,
     changeElementType: (data:ChangeElementTypeData) => void
     changeToDoState: (data:ChangeToDoStateData) => void
 }
 
 export const DefaultElement = (props: Props) => {
-    const {element, dragging, changeElementType, changeToDoState} = props
+    const {element, changeElementType, changeToDoState} = props
     const [value, setValue] = useState(element.value)
     const [menu, setMenu] = useState(false)
     const [placeholder, setPlaceholder] = useState('')
-
-    // Dragging code
-    const draggingHandler = (type: string, e: DragEvent<HTMLDivElement>) => {
-        dragging(type, e, element)
-    }
-    const dragEvents = {
-        onDragStart: (e: DragEvent<HTMLDivElement>) => draggingHandler("start", e),
-        onDragLeave: (e: DragEvent<HTMLDivElement>) => draggingHandler("leave", e),
-        onDragEnd: (e: DragEvent<HTMLDivElement>) => draggingHandler("end", e),
-        onDragOver: (e: DragEvent<HTMLDivElement>) => draggingHandler("over", e),
-        onDrop: (e: DragEvent<HTMLDivElement>) => draggingHandler("drop", e),
-    }
 
     // Check if user clicked outside menu
     const clickOutsideMenu = () => {
@@ -96,7 +83,7 @@ export const DefaultElement = (props: Props) => {
     }
 
     return (
-        <div className={'element'} {...dragEvents}>
+        <div className={'element'}>
             <ElementControls/>
             {elementSetter(element)}
         </div>
