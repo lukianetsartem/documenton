@@ -41,34 +41,40 @@ export const Document = () => {
     // Changing element type feature (for example: text => heading)
     const changeElementType = (data: ChangeElementTypeData) => {
         const {id, type, category, placeholder} = data
+
         setDocumentElements(documentElements.map(e => {
-            if (e.id === id) {
-                switch (type) {
-                    case "TEXT":
-                    case "BIG_HEADING":
-                    case "MEDIUM_HEADING":
-                    case "SMALL_HEADING":
-                    case "VIDEO":
-                    case "PICTURE":
-                        return {
-                            id: e.id,
-                            value: e.value,
-                            type: type,
-                            category: category,
-                            placeholder: placeholder
-                        }
-                    case "TO_DO":
-                        return {
-                            id: e.id,
-                            value: e.value,
-                            type: type,
-                            category: category,
-                            placeholder: placeholder,
-                            isChecked: false
-                        }
-                    default:
-                        return e
+            const setDefault = () => {
+                return {
+                    id: id,
+                    value: e.value,
+                    type: type,
+                    category: category,
+                    placeholder: placeholder
                 }
+            }
+            const setToDo = () => {
+                return {
+                    id: id,
+                    value: e.value,
+                    type: type,
+                    category: category,
+                    placeholder: placeholder,
+                    isChecked: false
+                }
+            }
+
+            const strategies = {
+                TEXT: setDefault(),
+                BIG_HEADING: setDefault(),
+                MEDIUM_HEADING: setDefault(),
+                SMALL_HEADING: setDefault(),
+                VIDEO: setDefault(),
+                PICTURE: setDefault(),
+                TO_DO: setToDo()
+            }
+
+            if (e.id === id) {
+                return strategies[type as keyof typeof strategies]
             } else return e
         }))
     }
