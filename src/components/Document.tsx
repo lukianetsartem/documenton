@@ -43,24 +43,19 @@ export const Document = () => {
         const {id, type, category, placeholder} = data
 
         setDocumentElements(documentElements.map(e => {
+            const commonData = {
+                id: id,
+                value: e.value,
+                type: type,
+                category: category,
+                placeholder: placeholder
+            }
+
             const setDefault = () => {
-                return {
-                    id: id,
-                    value: e.value,
-                    type: type,
-                    category: category,
-                    placeholder: placeholder
-                }
+                return commonData
             }
             const setToDo = () => {
-                return {
-                    id: id,
-                    value: e.value,
-                    type: type,
-                    category: category,
-                    placeholder: placeholder,
-                    isChecked: false
-                }
+                return {...commonData, isChecked: false}
             }
 
             const strategies = {
