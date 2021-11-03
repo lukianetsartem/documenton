@@ -3,12 +3,12 @@ import {ChangeElementTypeData, ChangeToDoStateData, DocumentElementType} from ".
 import {ElementControls} from "./Controls";
 import '../../../scss/element.scss';
 import {Text} from '../Elements/Text/Text'
-import { Media } from "../Elements/Media/Media";
+import {Media} from "../Elements/Media/Media";
 
 type Props = {
     element: DocumentElementType,
-    changeElementType: (data:ChangeElementTypeData) => void
-    changeToDoState: (data:ChangeToDoStateData) => void
+    changeElementType: (data: ChangeElementTypeData) => void
+    changeToDoState: (data: ChangeToDoStateData) => void
 }
 
 export const DefaultElement = (props: Props) => {
@@ -17,75 +17,49 @@ export const DefaultElement = (props: Props) => {
     const [menu, setMenu] = useState(false)
     const [placeholder, setPlaceholder] = useState('')
 
-    // Check if user clicked outside menu
-    const clickOutsideMenu = () => {
-        setMenu(false)
-        setValue('')
-        document.removeEventListener("click", clickOutsideMenu)
+    const setTextElement = () => {
+        const props = {
+            menu: menu,
+            value: value,
+            placeholder: placeholder,
+            id: element.id,
+            type: element.type,
+            initialPlaceholder: element.placeholder,
+            isChecked: element.isChecked,
+            setMenu: setMenu,
+            setValue: setValue,
+            setPlaceholder: setPlaceholder,
+            changeElementType: changeElementType,
+            changeToDoState: changeToDoState,
+        }
+        return <Text {...props}/>
+    }
+    const setMediaElement = () => {
+        const props = {
+            value: value,
+            type: element.type,
+            title: element.placeholder,
+            setValue: setValue,
+        }
+        return <Media {...props}/>
     }
 
-    // Textarea value changing catcher
-    const onValueChanging = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = e.target.value
-
-        setValue(value)
-        if (value === '/') {
-            setMenu(true)
-            document.addEventListener("click", clickOutsideMenu)
-        } else {
-            setMenu(false)
-        }
+    const strategies = {
+        TEXT: setTextElement(),
+        MEDIA: setMediaElement()
     }
 
-    const setMediaLink = (value:string, type:string) => {
-        switch (type) {
-            case "VIDEO":
-                setValue(value.replace('https://youtu.be/', ''))
-                break
-            case "PICTURE":
-                setValue(value)
-        }
-    }
+    type strategyKey = keyof typeof strategies
 
-    // Setting all elements of the document depending on the type
-    const elementSetter = (element: DocumentElementType) => {
-        switch (element.type) {
-            case "TEXT":
-            case "BIG_HEADING":
-            case "MEDIUM_HEADING":
-            case "SMALL_HEADING":
-            case "TO_DO":
-                const textProps = {
-                    menu: menu,
-                    value: value,
-                    placeholder: placeholder,
-                    id: element.id,
-                    type: element.type,
-                    initialPlaceholder: element.placeholder,
-                    isChecked: element.isChecked,
-                    setPlaceholder: setPlaceholder,
-                    onValueChanging: onValueChanging,
-                    clickOutsideMenu: clickOutsideMenu,
-                    changeElementType: changeElementType,
-                    changeToDoState: changeToDoState,
-                }
-                return <Text {...textProps}/>
-            case "VIDEO":
-            case "PICTURE":
-                const mediaProps = {
-                    value: value,
-                    type: element.type,
-                    title: element.placeholder,
-                    setMediaLink: setMediaLink,
-                }
-                return <Media {...mediaProps}/>
-        }
+    // Deploying element depending on type
+    const setElement = (strategyKey: strategyKey) => {
+        return strategies[strategyKey]
     }
 
     return (
         <div className={'element'}>
             <ElementControls/>
-            {elementSetter(element)}
+            {setElement(element.category as strategyKey)}
         </div>
     )
 }

@@ -19,6 +19,7 @@ export const Menu = (props: Props) => {
                     title: 'Text',
                     subtitle: 'Just start writing plain text',
                     placeholder: 'Type \'/\' for commands',
+                    category: 'TEXT',
                     type: 'TEXT',
                     cover: 'https://www.notion.so/images/blocks/text.9fdb530b.png'
                 },
@@ -26,6 +27,7 @@ export const Menu = (props: Props) => {
                     title: 'Heading 1',
                     subtitle: 'Big section heading.',
                     placeholder: 'Big Heading',
+                    category: 'TEXT',
                     type: 'BIG_HEADING',
                     cover: 'https://www.notion.so/images/blocks/header.57a7576a.png'
                 },
@@ -33,6 +35,7 @@ export const Menu = (props: Props) => {
                     title: 'Heading 2',
                     subtitle: 'Medium section heading.',
                     placeholder: 'Medium heading',
+                    category: 'TEXT',
                     type: 'MEDIUM_HEADING',
                     cover: 'https://www.notion.so/images/blocks/subheader.9aab4769.png'
                 },
@@ -40,6 +43,7 @@ export const Menu = (props: Props) => {
                     title: 'Heading 3',
                     subtitle: 'Small section heading.',
                     placeholder: 'Small heading',
+                    category: 'TEXT',
                     type: 'SMALL_HEADING',
                     cover: 'https://www.notion.so/images/blocks/subsubheader.d0ed0bb3.png'
                 },
@@ -47,6 +51,7 @@ export const Menu = (props: Props) => {
                     title: 'To-do list',
                     subtitle: 'Track tasks with a to-do list.',
                     placeholder: 'To-do',
+                    category: 'TEXT',
                     type: 'TO_DO',
                     cover: 'https://www.notion.so/images/blocks/to-do.f8d20542.png'
                 },
@@ -59,6 +64,7 @@ export const Menu = (props: Props) => {
                     title: 'Video',
                     subtitle: 'Embed from YouTube',
                     placeholder: 'Embed a YouTube video',
+                    category: 'MEDIA',
                     type: 'VIDEO',
                     cover: 'https://www.notion.so/images/blocks/video.ceeec2c7.png'
                 },
@@ -66,6 +72,7 @@ export const Menu = (props: Props) => {
                     title: 'Picture',
                     subtitle: 'Embed with a link',
                     placeholder: 'Embed a picture by link',
+                    category: 'MEDIA',
                     type: 'PICTURE',
                     cover: 'https://www.notion.so/images/blocks/image.33d80a98.png'
                 },

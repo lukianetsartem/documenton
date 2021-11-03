@@ -9,6 +9,7 @@ import gradient_1 from '../assets/backgrounds/gradients/gradient_1.png';
 export type DocumentElementType = {
     id: number,
     value: string,
+    category: string,
     type: string,
     placeholder: string,
     isChecked?: boolean
@@ -16,7 +17,8 @@ export type DocumentElementType = {
 export type ChangeElementTypeData = {
     id: number,
     type: string,
-    placeholder: string
+    category: string,
+    placeholder: string,
 }
 export type ChangeToDoStateData = {
     id: number,
@@ -25,8 +27,9 @@ export type ChangeToDoStateData = {
 
 export const Document = () => {
     const elements = [
-        {id: 1, value: "", type: "VIDEO", placeholder: 'Embed a YouTube video'},
-        {id: 2, value: "", type: "PICTURE", placeholder: 'Embed a picture by link'},
+        {id: 1, value: "", category: 'MEDIA', type: "VIDEO", placeholder: 'Embed a YouTube video'},
+        {id: 2, value: "", category: 'MEDIA', type: "PICTURE", placeholder: 'Embed a picture by link'},
+        {id: 3, value: "", category: 'TEXT', type: "TEXT", placeholder: 'Type \'/\' for commands'},
     ]
 
     const [documentElements, setDocumentElements] = useState(elements)
@@ -37,7 +40,7 @@ export const Document = () => {
 
     // Changing element type feature (for example: text => heading)
     const changeElementType = (data: ChangeElementTypeData) => {
-        const {id, type, placeholder} = data
+        const {id, type, category, placeholder} = data
         setDocumentElements(documentElements.map(e => {
             if (e.id === id) {
                 switch (type) {
@@ -46,10 +49,12 @@ export const Document = () => {
                     case "MEDIUM_HEADING":
                     case "SMALL_HEADING":
                     case "VIDEO":
+                    case "PICTURE":
                         return {
                             id: e.id,
                             value: e.value,
                             type: type,
+                            category: category,
                             placeholder: placeholder
                         }
                     case "TO_DO":
@@ -57,6 +62,7 @@ export const Document = () => {
                             id: e.id,
                             value: e.value,
                             type: type,
+                            category: category,
                             placeholder: placeholder,
                             isChecked: false
                         }

@@ -10,6 +10,7 @@ type Props = {
         type: string,
         cover: string,
         placeholder: string,
+        category: string,
     }
 }
 
@@ -19,7 +20,8 @@ export const MenuOption = (props: Props) => {
     const data = {
         id: id,
         type: option.type,
-        placeholder: option.placeholder
+        placeholder: option.placeholder,
+        category: option.category
     }
 
     return (

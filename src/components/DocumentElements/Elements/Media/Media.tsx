@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import '../../../../scss/mediaElement.scss';
 import video from '../../../../assets/icons/video.png';
 import picture from '../../../../assets/icons/picture.png'
@@ -10,14 +10,14 @@ type Props = {
     value: string,
     type: string,
     title: string,
-    setMediaLink: (value:string, type:string) => void,
+    setValue: Dispatch<SetStateAction<string>>,
 }
 export type MediaElementProps = {
     value:string
 }
 
 export const Media = (props: Props) => {
-    const {value, type, title, setMediaLink} = props
+    const {value, type, title, setValue} = props
 
     const [icon, setIcon] = useState('')
     const [menu, setMenu] = useState(false)
@@ -37,6 +37,16 @@ export const Media = (props: Props) => {
                 configureElement(picture, <Picture value={value}/>)
         }
     }, [type, value])
+
+    const setMediaLink = (value: string, type: string) => {
+        switch (type) {
+            case "VIDEO":
+                setValue(value.replace('https://youtu.be/', ''))
+                break
+            case "PICTURE":
+                setValue(value)
+        }
+    }
 
     return (
         <div className={'media-element'}>

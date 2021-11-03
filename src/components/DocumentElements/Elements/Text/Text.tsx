@@ -8,21 +8,21 @@ type Props = {
     menu: boolean,
     value: string,
     placeholder: string,
-    initialPlaceholder: string,
-    onValueChanging: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
-    setPlaceholder: Dispatch<SetStateAction<string>>,
-    changeElementType: (data: ChangeElementTypeData) => void
-    changeToDoState: (data: ChangeToDoStateData) => void,
-    clickOutsideMenu: () => void,
     type: string,
     id: number,
     isChecked?: boolean,
+    initialPlaceholder: string,
+    setPlaceholder: Dispatch<SetStateAction<string>>,
+    setValue: Dispatch<SetStateAction<string>>,
+    setMenu: Dispatch<SetStateAction<boolean>>,
+    changeElementType: (data: ChangeElementTypeData) => void
+    changeToDoState: (data: ChangeToDoStateData) => void,
 }
 
 export const Text = (props: Props) => {
     const {
-        id, menu, type, value, placeholder, initialPlaceholder, onValueChanging, clickOutsideMenu, setPlaceholder,
-        changeElementType, changeToDoState, isChecked
+        id, menu, type, value, placeholder, initialPlaceholder, setPlaceholder,
+        changeElementType, changeToDoState, isChecked, setMenu, setValue
     } = props
     const [textStyle, setTextStyle] = useState('')
 
@@ -47,6 +47,26 @@ export const Text = (props: Props) => {
         }
     }, [isChecked, type, initialPlaceholder, setPlaceholder])
 
+    const clickOutsideMenu = () => {
+        setMenu(false)
+        setValue('')
+        document.removeEventListener("click", clickOutsideMenu)
+    }
+
+    // Textarea value changing catcher
+    const onValueChanging = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const value = e.target.value
+
+        setValue(value)
+        if (value === '/') {
+            setMenu(true)
+            document.addEventListener("click", clickOutsideMenu)
+        } else {
+            setMenu(false)
+        }
+    }
+
+    // To do statement changing catcher
     const onToDoChange = (style: string, isChecked: boolean) => {
         setTextStyle(style)
         changeToDoState({id: id, isChecked: isChecked})
