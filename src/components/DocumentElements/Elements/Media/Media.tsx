@@ -2,9 +2,9 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import '../../../../scss/mediaElement.scss';
 import video from '../../../../assets/icons/video.png';
 import picture from '../../../../assets/icons/picture.png'
-import { Menu } from "./Menu";
-import { Video } from "./Video";
-import { Picture } from "./Picture";
+import {Menu} from "./Menu";
+import {Video} from "./Video";
+import {Picture} from "./Picture";
 
 type Props = {
     value: string,
@@ -13,7 +13,7 @@ type Props = {
     setValue: Dispatch<SetStateAction<string>>,
 }
 export type MediaElementProps = {
-    value:string
+    value: string
 }
 
 export const Media = (props: Props) => {
@@ -29,23 +29,15 @@ export const Media = (props: Props) => {
     }
 
     useEffect(() => {
-        switch (type) {
-            case "VIDEO":
-                configureElement(video, <Video value={value}/>)
-                break
-            case "PICTURE":
-                configureElement(picture, <Picture value={value}/>)
-        }
+        if (type === "VIDEO") {
+            configureElement(video, <Video value={value}/>)
+        } else configureElement(picture, <Picture value={value}/>)
     }, [type, value])
 
     const setMediaLink = (value: string, type: string) => {
-        switch (type) {
-            case "VIDEO":
-                setValue(value.replace('https://youtu.be/', ''))
-                break
-            case "PICTURE":
-                setValue(value)
-        }
+        if (type === "VIDEO") {
+            setValue(value.replace('https://youtu.be/', ''))
+        } else setValue(value)
     }
 
     return (
